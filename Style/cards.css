@@ -1,0 +1,48 @@
+.cards-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    z-index: 2;
+  }
+  
+  .card {
+    display: flex;
+    border-radius: 10px;
+    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
+    border: 10px solid transparent;
+    z-index: 2;
+  }
+  
+  .card a {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .card .header {
+    background-image: url("https://cdn-www.konbini.com/fr/images/files/2019/01/gettyimages-903783188-e1577796154132.jpg?webp=");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .card .header .tag {
+  }
+  .card .header .play-btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: calc(100% - 20px);
+    left: 20px;
+    background-color: white;
+    border-radius: 10px;
+  }
+  
+  .card .body {
+  }
