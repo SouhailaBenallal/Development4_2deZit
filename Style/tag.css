@@ -1,25 +1,25 @@
 .tag-container {
-    display: flex;
-    margin: 30px 0;
-    flex-wrap: wrap;
-  }
-  
-  .tag {
-    background-color: #ececec;
-    border-radius: 10px;
-    padding: 8px 15px;
-    color: #444444;
-    margin: 5px;
-    cursor: pointer;
-  }
-  
-  .tag.active {
-    background-color: #1f5a73;
-    color: white;
-  }
-  
-  .tag.active:after {
-    content: "x";
-    margin-left: 10px;
-    font-size: 16px;
-  }
+  display: flex;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: #ececec;
+  border-radius: 10px;
+  padding: 8px 15px;
+  color: #444444;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.tag.active {
+  background-color: #1f5a73;
+  color: white;
+}
+
+.tag.active:after {
+  content: "x";
+  margin-left: 10px;
+  font-size: 16px;
+}
