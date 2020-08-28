@@ -7,13 +7,14 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="stylesheet" href="Style/cards.css">
-    <link rel="stylesheet" href="Style/header.css">
-    <link rel="stylesheet" href="Style/index.css">
-    <link rel="stylesheet" href="Style/tag.css">
-    <link rel="stylesheet" href="Style/topbar.css">
+    <link rel="stylesheet" href="./Style/topbar.css" />
+    <link rel="stylesheet" href="./Style/tag.css" />
+    <link rel="stylesheet" href="./Style/index.css" />
+    <link rel="stylesheet" href="./Style/header.css" />
+    <link rel="stylesheet" href="./Style/cards.css" />
 
-    <script src="JS/index.js"></script>
+    <script src="JS/card.js"></script>
+
   </head>
 
   <body>
@@ -22,56 +23,52 @@
         Logo
       </div>
       <ul>
-        <li><a href="/" id="home-link">Home</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="#video">Video</a></li>
         <li><a href="/about">About</a></li>
       </ul>
     </nav>
 
-    <div id="main-page">
-      <header>
-        <div class="image-bg-container"></div>
-      </header>
+    <header>
+      <div class="image-bg-container"></div>
+    </header>
 
-      <section>
-        <h1>
-          Blablabka
-        </h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-          explicabo dolor aut nihil debitis, id quos unde ratione at sunt veniam
-          similique facere deleniti dicta. Delectus totam laborum aperiam eius.
-        </p>
-      </section>
+    <section>
+      <h1>
+        Blablabka
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
+        explicabo dolor aut nihil debitis, id quos unde ratione at sunt veniam
+        similique facere deleniti dicta. Delectus totam laborum aperiam eius.
+      </p>
+    </section>
 
-      <section>
-        <form>
-          <label for="search">Search</label>
-          <input type="text" id="search-input" />
-          <button id="search-btn">Search</button>
-        </form>
-      </section>
+    <section>
+      <form>
+        <label for="search">Search</label>
+        <input type="text" id="search-input" />
+        <button id="search-btn">Search</button>
+      </form>
+    </section>
 
-      <section>
-        <h2>Category</h2>
-        <ul class="tag-container" id="categories-list">
-          <!-- <li><span class="tag">Family</span></li> -->
-        </ul>
-      </section>
+    <section>
+      <h2>Category</h2>
+      <ul class="tag-container">
+        <li><span class="tag">Family</span></li>
+      </ul>
+    </section>
 
-      <section>
-        <h2>Genre</h2>
-        <ul class="tag-container" id="genres-list"></ul>
-      </section>
+    <section>
+      <h2>Genre</h2>
+      <ul class="tag-container">
+        <li><span class="tag">Litterature</span></li>
+      </ul>
+    </section>
 
-      <section>
-        Total: <span id="nb-card"></span><br />
-        <button id="previousPage">Previous</button><br />
-        current page:<span id="currentPage"></span><br />
-        total page: <span id="totalPage"></span><br />
-        <button id="nextPage">Previous</button><br />
-        <ul class="cards-container" id="list">
-          <!-- 
+    <section>
+      <ul class="cards-container" id="list">
+        <!-- 
           Example of a card
           <li class="card">
           <a href="#">
@@ -89,10 +86,9 @@
             </div>
           </a>
         </li> -->
-        </ul>
-      </section>
-    </div>
+      </ul>
+    </section>
 
-    <script src="scripts/app.js"></script>
+    <script src="JS/index.js"></script>
   </body>
 </html>
