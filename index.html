@@ -7,14 +7,13 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="stylesheet" href="./Style/topbar.css" />
-    <link rel="stylesheet" href="./Style/tag.css" />
-    <link rel="stylesheet" href="./Style/index.css" />
-    <link rel="stylesheet" href="./Style/header.css" />
-    <link rel="stylesheet" href="./Style/cards.css" />
+    <link rel="stylesheet" href="Style/cards.css" />
+    <link rel="stylesheet" href="Style/header.css" />
+    <link rel="stylesheet" href="Style/index.css" />
+    <link rel="stylesheet" href="Style/tag.css" />
+    <link rel="stylesheet" href="Style/topbar.css" />
 
     <script src="JS/card.js"></script>
-
   </head>
 
   <body>
@@ -54,19 +53,18 @@
 
     <section>
       <h2>Category</h2>
-      <ul class="tag-container">
-        <li><span class="tag">Family</span></li>
+      <ul class="tag-container" id="categories-list">
+        <!-- <li><span class="tag">Family</span></li> -->
       </ul>
     </section>
 
     <section>
       <h2>Genre</h2>
-      <ul class="tag-container">
-        <li><span class="tag">Litterature</span></li>
-      </ul>
+      <ul class="tag-container" id="genres-list"></ul>
     </section>
 
     <section>
+      <span id="nb-card"></span>
       <ul class="cards-container" id="list">
         <!-- 
           Example of a card
