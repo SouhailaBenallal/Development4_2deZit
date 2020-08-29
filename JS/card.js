@@ -2,6 +2,7 @@ function createCard(d) {
   // Create card & add class
   const card = document.createElement("LI");
   card.classList.add("card");
+  card.dataset.slug = d.slug;
 
   // Link
   const link = document.createElement("A");
@@ -24,10 +25,11 @@ function createCard(d) {
     tag.innerText = d.genre;
     divHeader.appendChild(tag);
   }
+  
 
+ 
   const play = document.createElement("div");
   play.classList.add("play-btn");
-
   divHeader.appendChild(play);
 
   const title = document.createElement("h3");
@@ -35,7 +37,8 @@ function createCard(d) {
   const desc = document.createElement("p");
   desc.innerText = d.excerpt;
   const time = document.createElement("div");
-  time.innerText = "100 min";
+  time.innerText = d["video-length"];  
+
 
   divBody.appendChild(title);
   divBody.appendChild(desc);
@@ -57,4 +60,19 @@ function createTag(tagName, isActive) {
   tag.appendChild(span);
 
   return tag;
+}
+
+function createVideo(src) {
+  const video = document.createElement("VIDEO");
+  video.width = "320";
+  video.height = "240";
+  video.controls = true;
+
+  const source = document.createElement("SOURCE");
+  source.src = src;
+  source.type = "video/mp4";
+
+  video.appendChild(source);
+
+  return video;
 }

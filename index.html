@@ -7,8 +7,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="stylesheet" href="Style/cards.css" />
     <link rel="stylesheet" href="Style/header.css" />
+    <link rel="stylesheet" href="Style/cards.css" />
     <link rel="stylesheet" href="Style/index.css" />
     <link rel="stylesheet" href="Style/tag.css" />
     <link rel="stylesheet" href="Style/topbar.css" />
@@ -19,60 +19,64 @@
   <body>
     <nav>
       <div class="logo-container">
-        Logo
+        Poduim Aan Huis
       </div>
       <ul>
-        <li><a href="/">Home</a></li>
+        <li><a href="/" id="home-link">Home</a></li>
         <li><a href="#video">Video</a></li>
         <li><a href="/about">About</a></li>
       </ul>
     </nav>
 
-    <header>
-      <div class="image-bg-container"></div>
-    </header>
+    <div id="main-page">
+      <header>
+        <div class="image-bg-container"></div>
+      </header>
 
-    <section>
-      <h1>
-        Blablabka
-      </h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-        explicabo dolor aut nihil debitis, id quos unde ratione at sunt veniam
-        similique facere deleniti dicta. Delectus totam laborum aperiam eius.
-      </p>
-    </section>
+      <section>
+        <h1>
+          Haal voorstellingen naar je huiskamer
+        </h1>
+        <p>
+          Bekijk gratis opnames van straffe podiumvoorstellingen voor jong en oud. Elke dag komen er nieuwe bij. Via Podium Aan Huis bundelen gezelschappen, kunst- en cultuurhuizen virtueel de krachten om jou te blijven ontroeren en ontspannen. Door de coronacrisis is de magie van de live beleving even onbereikbaar. Geen nood, want als de zalen moeten sluiten, dan komt de voorstelling gewoon naar je toe. Veel kijkplezier!
+        </p>
+      </section>
+      <section class="Rose">
+        <p>
+          Liefste kijkers van Podium aan Huis,\ 31 augustus is de laatste dag dat jullie kunnen genieten van deze voorstellingen.\ Podium aan Huis is gestart als een tijdelijk initiatief voor de gesloten theaterzalen. Gezelschappen, kunst- en cultuurhuizen bundelden virtueel de krachten om jou te blijven ontroeren en ontspannen.\ Op 1 september halen we de site offline. Hopelijk vinden jullie de weg naar een cultuurhuis in de buurt.  </p> </section>
+      <section>
+        <form>
+          <label for="search">Zoek</label>
+          <input type="text" id="search-input" />
+          <button class="zoek" id="search-btn">Zoek</button>
+        </form>
+      </section>
 
-    <section>
-      <form>
-        <label for="search">Search</label>
-        <input type="text" id="search-input" />
-        <button id="search-btn">Search</button>
-      </form>
-    </section>
+      <section>
+        <h2>Category</h2>
+        <ul class="tag-container" id="categories-list">
+          <!-- <li><span class="tag">Family</span></li> -->
+        </ul>
+      </section>
 
-    <section>
-      <h2>Category</h2>
-      <ul class="tag-container" id="categories-list">
-        <!-- <li><span class="tag">Family</span></li> -->
-      </ul>
-    </section>
+      <section>
+        <h2>Genre</h2>
+        <ul class="tag-container" id="genres-list"></ul>
+      </section>
 
-    <section>
-      <h2>Genre</h2>
-      <ul class="tag-container" id="genres-list"></ul>
-    </section>
-
-    <section>
-      <span id="nb-card"></span>
-      <ul class="cards-container" id="list">
-        <!-- 
+      <section>
+        Total: <span id="nb-card"></span><br />
+       
+        <ul class="cards-container" id="list">
+          <!-- 
           Example of a card
           <li class="card">
           <a href="#">
             <div class="header">
+               <img src="images/sample-1.jpg">
               <span class="tag">Music mahcin</span>
               <div class="play-btn"></div>
+              <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
             </div>
             <div class="body">
               <h3>Homo solo - part 3</h3>
@@ -84,8 +88,28 @@
             </div>
           </a>
         </li> -->
-      </ul>
-    </section>
+        </ul>
+        <div class="page">
+        <button id="previousPage">Vorige</button>
+        Pagina<span id="currentPage"> </span>
+        van <span id="totalPage"> </span>
+        <button id="nextPage">Volgende</button><br>
+      </div>
+        </section>
+    </div>
+
+    <div id="event-page" class="hidden">
+      <header>
+        <div id="video-wrapper"></div>
+      </header>
+
+      <section>
+        <main>
+          <h1 id="event-title"></h1>
+          <p id="event-desc"></p>
+        </main>
+      </section>
+    </div>
 
     <script src="JS/index.js"></script>
   </body>

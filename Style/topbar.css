@@ -4,14 +4,13 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  border-bottom: 1px solid grey;
   height: 65px;
   justify-content: space-between;
   background-color: white;
 }
 
 nav .logo-container {
-  background-color: rgba(0, 0, 0, 0.1);
+  font-weight: bold;
   width: 150px;
   height: 100%;
   display: flex;

@@ -1,17 +1,100 @@
+const searchBtn = document.getElementById("search-btn");
 const nbCardEl = document.getElementById("nb-card");
+const currPageEl = document.getElementById("currentPage");
+const totalPageEl = document.getElementById("totalPage");
+const searchInput = document.getElementById("search-input");
+const list = document.getElementById("list");
+const genreList = document.getElementById("genres-list");
+const categoryList = document.getElementById("categories-list");
+const previousPageBtn = document.getElementById("previousPage");
+const nextPageBtn = document.getElementById("nextPage");
+const mainPage = document.getElementById("main-page");
+const eventPage = document.getElementById("event-page");
+const homeLink = document.getElementById("home-link");
 
-let data = [];
+const data = [];
 let filteredData = [];
 
-let genres = [];
+const genres = [];
 let filteredGenres = [];
 
-let categories = [];
+const categories = [];
 let filteredCategories = [];
 
 let userSearchValue = "";
 
 let isFilterOn = false;
+
+let totalPage = 1;
+let currentPage = 1;
+const elPerPage = 15;
+
+function handleUrl(slug) {
+  window.history.pushState(
+    {
+      page: slug ? slug : "/",
+    },
+    null,
+    slug ? slug : "/"
+  );
+}
+
+function injectEventData(slug) {
+  const eventTitle = document.getElementById("event-title");
+  const eventDesc = document.getElementById("event-desc");
+  const videoWrapper = document.getElementById("video-wrapper");
+  const d = data.find((el) => el.slug === slug);
+
+  videoWrapper.innerHTML = "";
+
+  eventTitle.innerText = d.name;
+  eventDesc.innerText = d["social-share-description"];
+  videoWrapper.appendChild(createVideo(d["link-to-video"].url));
+
+  console.log(createVideo(d["link-to-video"].url));
+}
+
+function goMainPage(event) {
+  event.preventDefault();
+  eventPage.classList.add("hidden");
+  mainPage.classList.remove("hidden");
+  handleUrl();
+}
+
+function onCardClick(slug) {
+  event.preventDefault();
+  mainPage.classList.add("hidden");
+  eventPage.classList.remove("hidden");
+  handleUrl(slug);
+  injectEventData(slug);
+}
+
+function goPreviousPage() {
+  if (currentPage !== 1) {
+    currentPage = currentPage - 1;
+  }
+  displayData();
+}
+function goNextPage() {
+  if (currentPage < totalPage) {
+    currentPage = currentPage + 1;
+  }
+  displayData();
+}
+
+function getPaginateData(dataToSplit) {
+  let mutli;
+  if (currentPage === 1) {
+    multi = 0;
+  } else {
+    multi = currentPage - 1;
+  }
+
+  let start = 0 + elPerPage * multi;
+  let end = start + elPerPage;
+
+  return dataToSplit.slice(start, end);
+}
 
 function setFilterToggle(hasSearch) {
   if (filteredCategories.length || filteredGenres.length || hasSearch) {
@@ -19,6 +102,37 @@ function setFilterToggle(hasSearch) {
   } else {
     isFilterOn = false;
   }
+}
+
+function setFilteredData(newData) {
+  filteredData = [...newData];
+}
+
+function onSearch(event) {
+  event.preventDefault();
+  const searchValue = searchInput.value;
+
+  if (searchValue) {
+    const matchedValues = data.filter((el) => {
+      const elName = el.name.toLowerCase().trim();
+      const SearchValueToCompare = searchValue.toLowerCase().trim();
+
+      return elName.includes(SearchValueToCompare);
+    });
+    setFilterToggle(true);
+    setFilteredData(matchedValues);
+    userSearchValue = searchValue;
+  } else {
+    setFilterToggle(false);
+  }
+  displayData();
+}
+
+function attachEvents() {
+  searchBtn.addEventListener("click", onSearch);
+  previousPageBtn.addEventListener("click", goPreviousPage);
+  nextPageBtn.addEventListener("click", goNextPage);
+  homeLink.addEventListener("click", goMainPage);
 }
 
 function onGenreTagClicked(event) {
@@ -46,32 +160,6 @@ function onCategoryTagClicked(event) {
   displayData();
 }
 
-function onSearch(event) {
-  event.preventDefault();
-  const searchInput = document.getElementById("search-input");
-  const searchValue = searchInput.value;
-
-  if (searchValue) {
-    const matchedValues = data.filter((el) => {
-      const elName = el.name.toLowerCase().trim();
-      const SearchValueToCompare = searchValue.toLowerCase().trim();
-
-      return elName.includes(SearchValueToCompare);
-    });
-    setFilterToggle(true);
-    hydrateFilteredData(matchedValues);
-    userSearchValue = searchValue;
-  } else {
-    setFilterToggle(false);
-  }
-  displayData();
-}
-
-function attachEvents() {
-  const searchBtn = document.getElementById("search-btn");
-  searchBtn.addEventListener("click", onSearch);
-}
-
 async function fetchData() {
   const res = await fetch("../data.json");
   const dataJson = await res.json();
@@ -80,10 +168,10 @@ async function fetchData() {
 }
 
 function displayData() {
-  const list = document.getElementById("list");
-
   // Empty the list content
   list.innerHTML = "";
+
+  let dataToDisplay = data;
 
   // Fill list content
   if (isFilterOn) {
@@ -94,16 +182,12 @@ function displayData() {
       return elName.includes(SearchValueToCompare);
     });
 
-    console.log("dataFilterBySearch", dataFilterBySearch);
-
     const dataFilterBySearchAndGenres = dataFilterBySearch.filter((el) => {
       if (filteredGenres.length) {
         return filteredGenres.includes(el["genre-v2"]);
       }
       return true;
     });
-
-    console.log("dataFilterBySearchAndGenres", dataFilterBySearchAndGenres);
 
     const dataFilterBySearchAndGenresAndCategories = dataFilterBySearchAndGenres.filter(
       (el) => {
@@ -114,90 +198,85 @@ function displayData() {
       }
     );
 
-    console.log(
-      "dataFilterBySearchAndGenresAndCategories",
-      dataFilterBySearchAndGenresAndCategories
-    );
-
-    dataFilterBySearchAndGenresAndCategories.forEach((el) => {
-      const card = createCard(el);
-      list.appendChild(card);
-    });
-
-    nbCardEl.innerText = dataFilterBySearchAndGenresAndCategories.length;
-  } else {
-    data.forEach((el) => {
-      const card = createCard(el);
-      list.appendChild(card);
-    });
-
-    nbCardEl.innerText = data.length;
+    dataToDisplay = dataFilterBySearchAndGenresAndCategories;
   }
+
+  // console.log("dataToDisplay", dataToDisplay.length);
+
+  let paginateData = getPaginateData(dataToDisplay);
+
+  paginateData.forEach((el) => {
+    const card = createCard(el);
+    card.addEventListener("click", function (event) {
+      event.preventDefault();
+      return onCardClick(el.slug);
+    });
+    list.appendChild(card);
+  });
+
+  nbCardEl.innerText = dataToDisplay.length;
+  currPageEl.innerText = currentPage;
+  if (Math.round(dataToDisplay.length / elPerPage) < 1) {
+    totalPage = 1;
+  } else {
+    totalPage = Math.round(dataToDisplay.length / elPerPage);
+  }
+  totalPageEl.innerText = totalPage;
 }
 
 function displayGenresData() {
-  const list = document.getElementById("genres-list");
-
-  list.innerHTML = "";
+  genreList.innerHTML = "";
 
   genres.forEach((el) => {
     const isActive = filteredGenres.includes(el);
     const tag = createTag(el, isActive);
     tag.addEventListener("click", onGenreTagClicked);
-    list.appendChild(tag);
+    genreList.appendChild(tag);
   });
 }
 function displayCategoriesData() {
-  const list = document.getElementById("categories-list");
-
-  list.innerHTML = "";
+  categoryList.innerHTML = "";
 
   categories.forEach((el) => {
     const isActive = filteredCategories.includes(el);
     const tag = createTag(el, isActive);
     tag.addEventListener("click", onCategoryTagClicked);
-    list.appendChild(tag);
+    categoryList.appendChild(tag);
   });
 }
 
-function hydrateData(newData) {
-  data = [...newData];
-}
-function hydrateFilteredData(newData) {
-  filteredData = [...newData];
-}
-
-function hydrateGenresData(newData) {
-  const newGenres = [];
-
+function setData(newData) {
   newData.forEach((el) => {
-    if (!newGenres.includes(el["genre-v2"])) {
-      newGenres.push(el["genre-v2"]);
+    data.push(el);
+  });
+}
+
+function setGenresData(newData) {
+  newData.forEach((el) => {
+    if (!genres.includes(el["genre-v2"])) {
+      genres.push(el["genre-v2"]);
     }
   });
-
-  genres = [...newGenres];
 }
 
-function hydrateCategoriesData(newData) {
-  const newCategories = [];
-
+function setCategoriesData(newData) {
   newData.forEach((el) => {
-    if (!newCategories.includes(el.category)) {
-      newCategories.push(el.category);
+    if (!categories.includes(el.category)) {
+      categories.push(el.category);
     }
   });
-
-  categories = [...newCategories];
 }
 
 (async function () {
   attachEvents();
+
   const dataFetched = await fetchData();
-  hydrateData(dataFetched);
-  hydrateGenresData(dataFetched);
-  hydrateCategoriesData(dataFetched);
+
+  setData(dataFetched);
+  setGenresData(dataFetched);
+  setCategoriesData(dataFetched);
+
   displayData();
   displayGenresData();
   displayCategoriesData();
-})();
+})(); 
