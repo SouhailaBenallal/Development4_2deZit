@@ -33,20 +33,37 @@
   height: 100px;
   position: relative;
   z-index: 10px ;
+  border-style: 2px solid white;
 }
 
 .card .header .tag {
 }
 .card .header .play-btn {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   top: calc(100% - 20px);
   left: 20px;
   background-color: white;
   border-radius: 10px;
 }
 
+
 .card .body {
   align-items: center;
 }
+
+.play-btn {
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-left: 10px solid white;
+ }
+ 
+ .play-btn::before {
+  font-family: 'Webdings';
+  font-size: 28px;
+  content: '\25B6';
+  top: -2px;
+  left: 12px;
+ } 

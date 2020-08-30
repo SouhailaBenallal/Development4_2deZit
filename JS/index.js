@@ -29,6 +29,7 @@ let totalPage = 1;
 let currentPage = 1;
 const elPerPage = 15;
 
+//functie voor url te veranderen met behulp van de slug
 function handleUrl(slug) {
   window.history.pushState(
     {
@@ -38,7 +39,7 @@ function handleUrl(slug) {
     slug ? slug : "/"
   );
 }
-
+//functie voor inzetten van data op het tweede pagina met behulp van de slug
 function injectEventData(slug) {
   const eventTitle = document.getElementById("event-title");
   const eventDesc = document.getElementById("event-desc");
@@ -53,14 +54,14 @@ function injectEventData(slug) {
 
   console.log(createVideo(d["link-to-video"].url));
 }
-
+//functie voor het verbegen van ene pagina via event en gaan naar de hoofdpagina
 function goMainPage(event) {
   event.preventDefault();
   eventPage.classList.add("hidden");
   mainPage.classList.remove("hidden");
   handleUrl();
 }
-
+//functie voor het verbegen van ene pagina via slug en wanneer je op de card klik
 function onCardClick(slug) {
   event.preventDefault();
   mainPage.classList.add("hidden");
@@ -68,20 +69,21 @@ function onCardClick(slug) {
   handleUrl(slug);
   injectEventData(slug);
 }
-
+//functie voor te gaan naar de vorige pagina
 function goPreviousPage() {
   if (currentPage !== 1) {
     currentPage = currentPage - 1;
   }
   displayData();
 }
+//functie voor te gaan naar de vorige pagina
 function goNextPage() {
   if (currentPage < totalPage) {
     currentPage = currentPage + 1;
   }
   displayData();
 }
-
+//functie van gepagineerde gegevens ophalen
 function getPaginateData(dataToSplit) {
   let mutli;
   if (currentPage === 1) {
@@ -95,7 +97,7 @@ function getPaginateData(dataToSplit) {
 
   return dataToSplit.slice(start, end);
 }
-
+//functie voor wisselen van het filter
 function setFilterToggle(hasSearch) {
   if (filteredCategories.length || filteredGenres.length || hasSearch) {
     isFilterOn = true;
@@ -103,20 +105,21 @@ function setFilterToggle(hasSearch) {
     isFilterOn = false;
   }
 }
-
+//functie maken van nieuwe data bij het filteren
 function setFilteredData(newData) {
   filteredData = [...newData];
 }
-
+//functie van het opzoeken van gegevens 
 function onSearch(event) {
   event.preventDefault();
   const searchValue = searchInput.value;
 
   if (searchValue) {
     const matchedValues = data.filter((el) => {
+      //trim --> splitesen van woord
       const elName = el.name.toLowerCase().trim();
       const SearchValueToCompare = searchValue.toLowerCase().trim();
-
+      //includes --> omvat
       return elName.includes(SearchValueToCompare);
     });
     setFilterToggle(true);
@@ -127,18 +130,20 @@ function onSearch(event) {
   }
   displayData();
 }
-
+//functie voor voegen van evenementen toe
 function attachEvents() {
   searchBtn.addEventListener("click", onSearch);
   previousPageBtn.addEventListener("click", goPreviousPage);
   nextPageBtn.addEventListener("click", goNextPage);
   homeLink.addEventListener("click", goMainPage);
 }
-
+//functie op Genre-tag aangeklikt via if else structuur
 function onGenreTagClicked(event) {
   const genreToFilter = event.target.innerText;
   if (filteredGenres.includes(genreToFilter)) {
+    //indexOf --> geeft de eerste index terug waarvoor een bepaald element in een array wordt gevonden.
     const elIndex = filteredGenres.indexOf(genreToFilter);
+    //splice --> wijzig de inhoud van een array door elementen te verwijderen en / of nieuwe elementen toe te voegen
     filteredGenres.splice(elIndex, 1);
   } else {
     filteredGenres.push(genreToFilter);
@@ -147,6 +152,7 @@ function onGenreTagClicked(event) {
   displayGenresData();
   displayData();
 }
+//functie op Category-tag aangeklikt via if else structuur
 function onCategoryTagClicked(event) {
   const categoryToFilter = event.target.innerText;
   if (filteredCategories.includes(categoryToFilter)) {
@@ -159,14 +165,14 @@ function onCategoryTagClicked(event) {
   displayCategoriesData();
   displayData();
 }
-
+//gegevens ophalen 
 async function fetchData() {
   const res = await fetch("../data.json");
   const dataJson = await res.json();
 
   return dataJson;
 }
-
+//gegevens weergeven
 function displayData() {
   // Empty the list content
   list.innerHTML = "";
@@ -223,7 +229,7 @@ function displayData() {
   }
   totalPageEl.innerText = totalPage;
 }
-
+//gegevens weergeven op genres
 function displayGenresData() {
   genreList.innerHTML = "";
 
@@ -234,6 +240,7 @@ function displayGenresData() {
     genreList.appendChild(tag);
   });
 }
+//gegevens weergeven op categorie
 function displayCategoriesData() {
   categoryList.innerHTML = "";
 
@@ -244,13 +251,13 @@ function displayCategoriesData() {
     categoryList.appendChild(tag);
   });
 }
-
+//gegevens instellen
 function setData(newData) {
   newData.forEach((el) => {
     data.push(el);
   });
 }
-
+//gegevens instellen op genres
 function setGenresData(newData) {
   newData.forEach((el) => {
     if (!genres.includes(el["genre-v2"])) {
@@ -258,7 +265,7 @@ function setGenresData(newData) {
     }
   });
 }
-
+//gegevens instellen op categorie
 function setCategoriesData(newData) {
   newData.forEach((el) => {
     if (!categories.includes(el.category)) {
@@ -266,7 +273,7 @@ function setCategoriesData(newData) {
     }
   });
 }
-
+//functie die zich zelf oproep en oproep andere functies op
 (async function () {
   attachEvents();
 

@@ -1,3 +1,4 @@
+//functie van maken van card
 function createCard(d) {
   // Create card & add class
   const card = document.createElement("LI");
@@ -46,7 +47,7 @@ function createCard(d) {
 
   return card;
 }
-
+//functie maken van Tags
 function createTag(tagName, isActive) {
   const tag = document.createElement("LI");
 
@@ -62,6 +63,7 @@ function createTag(tagName, isActive) {
   return tag;
 }
 
+// functie van maken van een video 
 function createVideo(src) {
   const video = document.createElement("VIDEO");
   video.width = "320";
@@ -76,3 +78,6 @@ function createVideo(src) {
 
   return video;
 }
+
+
+// 1 - fetch data
